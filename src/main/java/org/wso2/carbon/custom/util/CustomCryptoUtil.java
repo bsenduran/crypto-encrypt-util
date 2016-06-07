@@ -3,7 +3,7 @@ package org.wso2.carbon.custom.util;
 import org.apache.axiom.om.util.Base64;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.Security;
@@ -12,17 +12,17 @@ import javax.crypto.Cipher;
 
 public class CustomCryptoUtil {
     public static void main(String[] args) throws Exception {
-        System.out.println(encrypt(args[0]));
+        System.out.println(encrypt(args[0], args[1], args[2], args[3]));
     }
 
-    public static String encrypt(String plainTextPassword) throws Exception {
-
+    public static String encrypt(String plainTextPassword, String keyStoreFile, String keyStorePassword,
+            String certificateAlias) throws Exception {
         byte[] encryptedKey;
 
         KeyStore keyStore = KeyStore.getInstance("JKS");
-        InputStream resourceAsStream = CustomCryptoUtil.class.getResourceAsStream(File.separator + "wso2carbon.jks");
-        keyStore.load(resourceAsStream, "wso2carbon".toCharArray());
-        Certificate[] certs = keyStore.getCertificateChain("wso2carbon");
+        InputStream resourceAsStream = new FileInputStream(keyStoreFile);
+        keyStore.load(resourceAsStream, keyStorePassword.toCharArray());
+        Certificate[] certs = keyStore.getCertificateChain(certificateAlias);
         Security.addProvider(new BouncyCastleProvider());
         Cipher cipher = Cipher.getInstance("RSA", "BC");
         cipher.init(1, certs[0].getPublicKey());
