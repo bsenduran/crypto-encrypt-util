@@ -4,6 +4,7 @@ custom util to get encrypted password for WSO2
 ### How to build and run
 run `mvn clean install`
 
+Note - below step is redundant now
 create a directory call *lib* and copy the build jar (crypto-encrypt-util-1.0-SNAPSHOT.jar) to the lib directory.
 copy the following jars to the lib directory (from .m2)
 * axiom-api-1.2.11.jar
