@@ -1,8 +1,13 @@
 #!/bin/bash
 
+if [ ! -d "target" ]; then
+  echo "Please build the project first using 'mvn clean install'"
+  exit 1
+fi
+
 if [ "$#" -ne 4 ]; then
   echo "Usage: ./encrypt <plainTextPassword> <keystoreFilePath> <keystoreFilePassword> <certificateAlias>"
   exit 1
 fi
 
-java -cp "lib/*" org.wso2.carbon.custom.util.CustomCryptoUtil $1 $2 $3 $4
+java -cp "target/*" org.wso2.carbon.custom.util.CustomCryptoUtil $1 $2 $3 $4
